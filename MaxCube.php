@@ -1,26 +1,23 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: stefan
- * Date: 11/25/16
- * Time: 12:04 AM
- */
 
 namespace particleflux\MaxCube;
 
 
 use particleflux\MaxCube\messages\Message;
+use particleflux\MaxCube\messages\MessageH;
+use particleflux\MaxCube\messages\MessageL;
 use particleflux\MaxCube\models\Cube;
 use particleflux\MaxCube\models\Device;
+
 
 class MaxCube
 {
     const DEFAULT_PORT = 62910;
 
-
-
     private $ipAddress;
     private $socket;
+
+    /** @var  Cube */
     private $cube;
 
     public function __construct($ipAddress)
@@ -38,9 +35,10 @@ class MaxCube
         // read initial stuff
         while ($line = fgets($this->socket)) {
             $incoming = Message::instantiate(rtrim($line));
-//            if ($incoming instanceof MessageL) {
-//                break;
-//            }
+            $this->handleMessage($incoming);
+            if ($incoming instanceof MessageL) {
+                break;
+            }
         }
     }
 
@@ -49,26 +47,20 @@ class MaxCube
         return $this->cube;
     }
 
-
-    protected function parseL($line)
+    /**
+     * @param Message $incoming
+     */
+    private function handleMessage($incoming)
     {
-        $line = base64_decode($line);
-        var_dump(unpack('H*', $line));
-        $messageLength = ord($line[0]);
-        echo 'L message length ' . $messageLength . "\n";
-
-        $device = new Device();
-        $device->rfAddress = unpack('H*', substr($line, 1, 3));
-        $device->mode = ord($line[6]) & 3;
-
-        echo 'got device info: ' . json_encode($device) . "\n";
-
+        $messageClass = get_class($incoming);
+        switch ($messageClass) {
+            case MessageH::class:
+                $this->cube = $incoming->parse();
+                break;
+            case MessageL::class:
+                $this->cube->devices = $incoming->parse();
+                break;
+        }
     }
+
 }
-
-
-
-require './models/Device.php';
-require './models/Cube.php';
-$m = new MaxCube('192.168.178.234');
-$m->connect();
