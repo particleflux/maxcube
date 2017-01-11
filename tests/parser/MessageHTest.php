@@ -11,9 +11,10 @@ namespace particleflux\MaxCube\tests\parser;
 
 use particleflux\MaxCube\messages\MessageH;
 use particleflux\MaxCube\models\Cube;
+use particleflux\MaxCube\tests\TestCase;
 
 
-class MessageHTest extends \PHPUnit_Framework_TestCase
+class MessageHTest extends TestCase
 {
     /**
      * @dataProvider parseProvider

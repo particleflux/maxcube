@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: stefan
- * Date: 1/11/17
- * Time: 9:19 PM
- */
 
 namespace particleflux\MaxCube\messages;
 
