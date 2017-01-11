@@ -21,11 +21,10 @@ abstract class Message
     public static function instantiate($rawMessage)
     {
         $line = rtrim($rawMessage);
-        $messageClass = "particleflux\\messages\\Message" . $line[0];
+        $messageClass = "particleflux\\MaxCube\\messages\\Message" . $line[0];
         if (class_exists($messageClass)) {
             /** @var Message $message */
-            $message = new $messageClass(substr($line, 2));
-            return $message->parse();
+            return new $messageClass(substr($line, 2));
         }
 
         echo "unknown message : $line\n";
