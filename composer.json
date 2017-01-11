@@ -1,0 +1,15 @@
+{
+    "name": "particleflux/maxcube",
+    "require": {
+        "php": ">=5.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "particleflux\\MaxCube\\": ""
+        }
+    }
+}
+
