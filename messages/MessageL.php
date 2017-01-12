@@ -14,7 +14,7 @@ class MessageL extends Message
     {
         $devices = [];
         $line = base64_decode($this->rawMessage);
-        $messageLength = ord($line[0]);
+//        $messageLength = ord($line[0]);
 
         $device = new Device();
         $device->rfAddress = unpack('H*', substr($line, 1, 3));
