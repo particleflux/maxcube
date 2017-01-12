@@ -7,8 +7,5 @@ php:
   - nightly
 install:
   - composer install
-addons:
-    code_climate:
-        repo_token: $CODE_CLIMATE_TOKEN
 after_success:
   - vendor/bin/test-reporter
