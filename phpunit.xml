@@ -15,11 +15,14 @@
     </logging>
     <filter>
         <whitelist>
-            <directory suffix=".php">./</directory>
+			<include>
+	            <directory suffix=".php">./</directory>
+			</include>
+			<exclude>
+      			<directory suffix=".php">vendor</directory>
+	            <file>autoloader.php</file>
+    	        <file>bootstrap.php</file>
+		    </exclude>
         </whitelist>
-        <blacklist>
-            <file>autoloader.php</file>
-            <file>bootstrap.php</file>
-        </blacklist>
     </filter>
 </phpunit>
