@@ -8,4 +8,5 @@ php:
 install:
   - composer install
 after_success:
+  - sed -e "s#$(pwd)/##g" -i build/logs/clover.xml
   - vendor/bin/test-reporter
