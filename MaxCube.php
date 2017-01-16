@@ -7,7 +7,6 @@ use particleflux\MaxCube\messages\Message;
 use particleflux\MaxCube\messages\MessageH;
 use particleflux\MaxCube\messages\MessageL;
 use particleflux\MaxCube\models\Cube;
-use particleflux\MaxCube\models\Device;
 
 
 class MaxCube
