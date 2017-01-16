@@ -6,7 +6,7 @@
  * Time: 10:48 PM
  */
 
-namespace parser;
+namespace particleflux\MaxCube\tests\parser;
 
 
 use particleflux\MaxCube\messages\MessageL;
