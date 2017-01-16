@@ -39,7 +39,7 @@ class MessageLTest extends TestCase
     public function parseProvider()
     {
         return [
-            [
+            'single-device' => [
                 'CxUK4gkSGWQ9AK8A',
                 [
                     [
@@ -48,7 +48,14 @@ class MessageLTest extends TestCase
                     ],
                 ],
             ],
-
+            'multi-device' => [
+                'Cw/a7QkSGBgoAMwACw/DcwkSGBgoAM8ACw/DgAkSGBgoAM4A',
+                [
+                    [],
+                    [],
+                    []
+                ],
+            ],
         ];
     }
 }
