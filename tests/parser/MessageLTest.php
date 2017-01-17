@@ -20,20 +20,28 @@ class MessageLTest extends TestCase
      * @dataProvider parseProvider
      *
      * @param string $rawMessage
-     * @param array $decodedAttributes
+     * @param mixed[][] $decodedAttributes
      */
     public function testParse($rawMessage, $decodedAttributes)
     {
         $message = new MessageL($rawMessage);
         $devices = $message->parse();
         $this->assertInternalType('array', $devices);
-        $this->assertEquals(count($decodedAttributes), count($devices));
-//        $this->assertInstanceOf(Device::class, $devices);
+        $this->assertCount($deviceCount = count($devices), $decodedAttributes);
 
-//        foreach ($decodedAttributes as $name => $value) {
-//            $this->assertObjectHasAttribute($name, $device, "expected attribute $name missing");
-//            $this->assertEquals($value, $device->$name, "Attribute $name has wrong value '{$device->$name}', expected '$value'");
-//        }
+        for ($i = 0; $i < $deviceCount; ++$i) {
+            $this->assertInstanceOf(Device::class, $devices[$i]);
+
+            foreach ($decodedAttributes[$i] as $name => $value) {
+                $this->assertObjectHasAttribute($name, $devices[$i], "expected attribute $name missing");
+                $this->assertSame(
+                    $value,
+                    $devices[$i]->$name,
+                    "Attribute $name has wrong value '{$devices[$i]->$name}', expected '$value'"
+                );
+            }
+        }
+
     }
 
     public function parseProvider()
@@ -43,17 +51,34 @@ class MessageLTest extends TestCase
                 'CxUK4gkSGWQ9AK8A',
                 [
                     [
-                        'rfAddress' => '09e4f5',
-                        'mode'      => Device::MODE_MANUAL,
+                        'rfAddress'     => '150ae2',
+                        'mode'          => Device::MODE_MANUAL,
+                        'valvePosition' => 100,
+                        'temperature'   => 30.5,
                     ],
                 ],
             ],
-            'multi-device' => [
+            'multi-device (maxcube-protocol-github example)'  => [
                 'Cw/a7QkSGBgoAMwACw/DcwkSGBgoAM8ACw/DgAkSGBgoAM4A',
                 [
-                    [],
-                    [],
-                    []
+                    [
+                        'rfAddress'     => '0fdaed',
+                        'mode'          => Device::MODE_AUTO,
+                        'valvePosition' => 24,
+                        'temperature'   => 20,
+                    ],
+                    [
+                        'rfAddress'     => '0fc373',
+                        'mode'          => Device::MODE_AUTO,
+                        'valvePosition' => 24,
+                        'temperature'   => 20,
+                    ],
+                    [
+                        'rfAddress'     => '0fc380',
+                        'mode'          => Device::MODE_AUTO,
+                        'valvePosition' => 24,
+                        'temperature'   => 20,
+                    ],
                 ],
             ],
         ];

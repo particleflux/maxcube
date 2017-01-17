@@ -33,4 +33,18 @@ class Device
 
     /** @var  int one of the MODE_ constants */
     public $mode;
+
+    /**
+     * @var  int valve position
+     *
+     * 100 is fully open, 0 is closed
+     * wall thermostats always return 4
+     */
+    public $valvePosition;
+
+    /** @var  int configured temperature */
+    public $temperature;
+
+    /** @var  int */
+    public $wallTemperature;
 }
