@@ -14,13 +14,11 @@
         <log type="coverage-clover" target="build/logs/clover.xml"/>
     </logging>
     <filter>
-        <whitelist>
-            <include>
-                <directory suffix=".php">./</directory>
-            </include>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./</directory>
             <exclude>
                 <directory suffix=".php">vendor</directory>
-                <file>autoloader.php</file>
+                <directory suffix=".php">tests</directory>
                 <file>bootstrap.php</file>
             </exclude>
         </whitelist>
