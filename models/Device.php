@@ -28,11 +28,23 @@ class Device
 
     public $unknown;
 
-    /** @var  integer */
-    public $flags;
-
     /** @var  int one of the MODE_ constants */
     public $mode;
+
+    /** @var  bool dst state */
+    public $isDst;
+
+    /** @var  bool */
+    public $isGatewayKnown;
+
+    /** @var  bool */
+    public $isPanelLocked;
+
+    /** @var  bool */
+    public $isLinkError;
+
+    /** @var  bool */
+    public $isBatteryLow;
 
     /**
      * @var  int valve position

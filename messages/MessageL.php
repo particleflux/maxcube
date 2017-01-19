@@ -7,7 +7,12 @@ use particleflux\MaxCube\models\Device;
 
 class MessageL extends Message
 {
-    const MODE_BIT_MASK = 0x03;
+    const BIT_MASK_MODE        = 0b00000011;
+    const BIT_MASK_DST         = 0b00001000;
+    const BIT_MASK_GATEWAY     = 0b00010000;
+    const BIT_MASK_PANEL       = 0b00100000;
+    const BIT_MASK_LINK_STATUS = 0b01000000;
+    const BIT_MASK_BATTERY     = 0b10000000;
 
 
     public function parse()
@@ -29,7 +34,14 @@ class MessageL extends Message
     {
         $device = new Device();
         $device->rfAddress = unpack('H*', substr($subMessage, 1, 3))[1];
-        $device->mode = ord($subMessage[6]) & self::MODE_BIT_MASK;
+        $flag2 = ord($subMessage[6]);
+
+        $device->mode           = $flag2 & self::BIT_MASK_MODE;
+        $device->isDst          = ($flag2 & self::BIT_MASK_DST) > 0;
+        $device->isGatewayKnown = ($flag2 & self::BIT_MASK_GATEWAY) > 0;
+        $device->isPanelLocked  = ($flag2 & self::BIT_MASK_PANEL) > 0;
+        $device->isLinkError    = ($flag2 & self::BIT_MASK_LINK_STATUS) > 0;
+        $device->isBatteryLow   = ($flag2 & self::BIT_MASK_BATTERY) > 0;
 
         if ($length > 6) {
             $device->valvePosition = ord($subMessage[7]);
