@@ -14,21 +14,22 @@ class MaxCube
     const DEFAULT_PORT = 62910;
 
     private $ipAddress;
+    private $port;
     private $socket;
 
     /** @var  Cube */
     private $cube;
 
-    public function __construct($ipAddress)
+    public function __construct($ipAddress, $port = self::DEFAULT_PORT)
     {
         $this->ipAddress = $ipAddress;
-
+        $this->port = $port;
     }
 
     public function connect()
     {
         if (!is_resource($this->socket)) {
-            $this->socket = fsockopen($this->ipAddress, self::DEFAULT_PORT);
+            $this->socket = fsockopen($this->ipAddress, $this->port);
         }
 
         // read initial stuff
