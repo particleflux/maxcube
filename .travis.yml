@@ -7,8 +7,6 @@ php:
   - nightly
 install:
   - composer install
-#after_success:
-#  - sed -e "s#$(pwd)/##g" -i build/logs/clover.xml
-#  - vendor/bin/test-reporter
-addons:
-    - code_climate
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+  - php vendor/bin/test-reporter
